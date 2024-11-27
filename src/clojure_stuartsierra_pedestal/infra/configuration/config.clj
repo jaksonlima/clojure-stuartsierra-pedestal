@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.infra.config
+(ns clojure-stuartsierra-pedestal.infra.configuration.config
   (:require [aero.core :as aero]
             [clojure.java.io :as io]))
 

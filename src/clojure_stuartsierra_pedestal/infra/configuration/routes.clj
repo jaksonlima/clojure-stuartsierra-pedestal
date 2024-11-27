@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.infra.routes
+(ns clojure-stuartsierra-pedestal.infra.configuration.routes
   (:require [clojure-stuartsierra-pedestal.infra.controllers.url-controller :as uc]
             [io.pedestal.http.route :as route]))
 

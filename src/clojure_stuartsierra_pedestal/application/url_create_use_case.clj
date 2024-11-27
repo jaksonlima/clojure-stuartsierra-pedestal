@@ -13,5 +13,5 @@
   (let [input-name (:name input)
         input-url (:url input)
         url-aggregate (u/create input-name input-url)]
-    (ug/create-url gateway url-aggregate)
+    (ug/create gateway url-aggregate)
     {:id (-> url-aggregate :id :value str)}))

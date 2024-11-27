@@ -1,5 +1,5 @@
 (ns clojure-stuartsierra-pedestal.infra.core
-  (:require [clojure-stuartsierra-pedestal.infra.component :as component]
+  (:require [clojure-stuartsierra-pedestal.infra.configuration.component :as component]
             [clojure.tools.logging :as log]))
 
 (defn -main []

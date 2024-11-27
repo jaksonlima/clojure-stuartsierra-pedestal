@@ -44,6 +44,15 @@
              :updated-at instant}]
     (validated-throw url)))
 
+(s/defn update :- Url
+  [url :- Url
+   name :- s/Str
+   origin :- s/Str]
+  (let [url-updated (merge url {:name       name
+                                :origin     origin
+                                :updated-at (Instant/now)})]
+    (validated-throw url-updated)))
+
 (s/defn with :- Url [id :- s/Str
                      name :- s/Str
                      origin :- s/Str

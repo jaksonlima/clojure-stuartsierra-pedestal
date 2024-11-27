@@ -1,8 +1,8 @@
-(ns clojure-stuartsierra-pedestal.infra.component
-  (:require [clojure-stuartsierra-pedestal.infra.config :as config]
-            [clojure-stuartsierra-pedestal.infra.database :as database]
-            [clojure-stuartsierra-pedestal.infra.pedestal :as pedestal]
-            [clojure-stuartsierra-pedestal.infra.routes :as routes]
+(ns clojure-stuartsierra-pedestal.infra.configuration.component
+  (:require [clojure-stuartsierra-pedestal.infra.configuration.config :as config]
+            [clojure-stuartsierra-pedestal.infra.configuration.database :as database]
+            [clojure-stuartsierra-pedestal.infra.configuration.pedestal :as pedestal]
+            [clojure-stuartsierra-pedestal.infra.configuration.routes :as routes]
             [com.stuartsierra.component :as component])
   (:use [clojure.pprint]))
 

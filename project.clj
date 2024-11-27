@@ -22,8 +22,7 @@
 
                  [org.clojure/tools.logging "1.3.0"]
                  [org.slf4j/slf4j-simple "2.0.10"]]
+  :main ^:skip-aot clojure-stuartsierra-pedestal.core
+  :target-path "target/%s"
+  :profiles {:uberjar {:aot :all :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}}
   :repl-options {:init-ns clojure-stuartsierra-pedestal.core})
-
-;:main ^:skip-aot hello-world.core
-;:target-path "target/%s"
-;:profiles {:uberjar {:aot :all}})

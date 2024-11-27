@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.infra.pedestal
+(ns clojure-stuartsierra-pedestal.infra.configuration.pedestal
   (:require [clojure.data.json :as json]
             [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
