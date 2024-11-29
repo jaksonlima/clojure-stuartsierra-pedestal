@@ -32,7 +32,8 @@
       url)))
 
 (s/defn create :- Url
-  [name :- s/Str url :- s/Str]
+  [name :- s/Str
+   url :- s/Str]
   (let [instant (Instant/now)
         url-id (ui/create)
         url-hash (uh/create)

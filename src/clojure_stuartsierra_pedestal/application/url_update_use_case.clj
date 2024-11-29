@@ -1,7 +1,7 @@
 (ns clojure-stuartsierra-pedestal.application.url-update-use-case
   (:require [clojure-stuartsierra-pedestal.domain.url :as u]
-            [clojure-stuartsierra-pedestal.domain.url-id :as ui]
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
+            [clojure-stuartsierra-pedestal.domain.url-id :as ui]
             [schema.core :as s]))
 
 (s/defschema Input {:id     s/Str
