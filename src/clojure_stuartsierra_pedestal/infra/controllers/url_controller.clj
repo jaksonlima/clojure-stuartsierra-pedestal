@@ -1,8 +1,10 @@
 (ns clojure-stuartsierra-pedestal.infra.controllers.url-controller
   (:require [clojure-stuartsierra-pedestal.application.url-create-use-case :as uc]
             [clojure-stuartsierra-pedestal.application.url-delete-use-case :as ud]
+            [clojure-stuartsierra-pedestal.application.url-find-by-id-use-case :as uf]
+            [clojure-stuartsierra-pedestal.application.url-find-by-page-use-case :as up]
             [clojure-stuartsierra-pedestal.application.url-update-use-case :as uu]
-            [clojure-stuartsierra-pedestal.infra.gateways.url-gateway :as ug]
+            [clojure-stuartsierra-pedestal.infra.gateways.postgres-url-gateway :as ug]
             [schema.core :as s]))
 
 (s/defn create-url-controller
@@ -27,3 +29,17 @@
   (let [gateway (ug/->PostgresUrlGateway database)]
     (ud/execute gateway id)
     {:status 200}))
+
+(s/defn find-by-id-url-controller
+  [{{:keys [database]} :components
+    {:keys [id]}       :path-params}]
+  (let [gateway (ug/->PostgresUrlGateway database)
+        output (uf/execute gateway id)]
+    {:status 200 :body output}))
+
+(s/defn find-by-page-url-controller
+  [{{:keys [database]}  :components
+    {:keys [page size]} :path-params}]
+  (let [gateway (ug/->PostgresUrlGateway database)
+        output (up/execute gateway page size)]
+    {:status 200 :body output}))

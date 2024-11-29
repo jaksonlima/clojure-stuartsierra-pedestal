@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.infra.gateways.url-gateway
+(ns clojure-stuartsierra-pedestal.infra.gateways.postgres-url-gateway
   (:require [clojure-stuartsierra-pedestal.domain.url :as u]
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
             [next.jdbc.sql :as sql]
@@ -47,5 +47,5 @@
   (find-by-page [_ page size]
     (let [offset (* (- page 1) size)
           sql-query "SELECT * FROM url LIMIT ? OFFSET ?"
-          result (sql/query database [sql-query size offset])]
-      (db->url result))))
+          results (sql/query database [sql-query size offset])]
+      (map db->url results))))
