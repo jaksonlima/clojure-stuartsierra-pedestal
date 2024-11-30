@@ -18,7 +18,7 @@
   [{:keys              [json-params]
     {:keys [database]} :components
     {:keys [id]}       :path-params}]
-  (let [input (merge {:id id} json-params)
+  (let [input (assoc json-params :id id)
         gateway (ug/->PostgresUrlGateway database)
         output (uu/execute gateway input)]
     {:status 200 :body output}))

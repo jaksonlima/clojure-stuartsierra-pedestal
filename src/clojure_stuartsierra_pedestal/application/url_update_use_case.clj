@@ -17,6 +17,6 @@
         input-url (:url input)
         url-id (ui/with input-id)
         url-retrieve (ug/find-by-id gateway url-id)
-        url-aggregate (u/update url-retrieve input-name input-url)]
-    (ug/update gateway url-aggregate)
-    {:id (-> url-aggregate :id :value str)}))
+        url-updated (u/update url-retrieve input-name input-url)]
+    (ug/update gateway url-updated)
+    {:id (-> url-updated :id :value str)}))

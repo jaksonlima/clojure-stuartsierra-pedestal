@@ -10,6 +10,7 @@
           (:url/name result)
           (:url/origin result)
           (:url/hash result)
+          (:url/active result)
           (:url/created_at result)
           (:url/updated_at result)))
 
@@ -30,13 +31,11 @@
                               {:name       (:name url)
                                :origin     (:origin url)
                                :hash       (-> url :hash :value)
+                               :active     (:active url)
                                :created_at (Timestamp/from (:created-at url))
                                :updated_at (Timestamp/from (:updated-at url))}
                               ["id = ?" (-> url :id :value)])]
       (db->url result)))
-
-  (delete-by-id [_ url-id]
-    (sql/delete! database :url ["id = ?" (-> url-id :value str)]))
 
   (find-by-id [_ url-id]
     (let [id (-> url-id :value str)

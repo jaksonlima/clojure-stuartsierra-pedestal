@@ -8,6 +8,7 @@
                   :name       s/Str
                   :origin     s/Str
                   :hash       uh/UrlHash
+                  :active     s/Bool
                   :created-at Instant
                   :updated-at Instant})
 
@@ -41,6 +42,7 @@
              :name       name
              :origin     url
              :hash       url-hash
+             :active     true
              :created-at instant
              :updated-at instant}]
     (validated-throw url)))
@@ -54,10 +56,14 @@
                                 :updated-at (Instant/now)})]
     (validated-throw url-updated)))
 
+(s/defn deactivate :- Url [url :- Url]
+  (assoc url :active false))
+
 (s/defn with :- Url [id :- s/Str
                      name :- s/Str
                      origin :- s/Str
                      hash :- s/Str
+                     active :- s/Bool
                      created-at :- Instant
                      updated-at :- Instant]
   (let [url-id (ui/with id)
@@ -66,6 +72,7 @@
              :name       name
              :origin     origin
              :hash       url-hash
+             :active     active
              :created-at created-at
              :updated-at updated-at}]
     (validated-throw url)))
