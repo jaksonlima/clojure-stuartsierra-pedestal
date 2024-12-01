@@ -12,4 +12,5 @@
       ["/url/:id" :put uc/update-url-controller :route-name :url-update]
       ["/url/:id" :delete uc/delete-url-controller :route-name :url-delete]
       ["/url/:id" :get uc/find-by-id-url-controller :route-name :url-find-by-id]
-      ["/url-page" :get uc/find-by-page-url-controller :route-name :url-find-page]}))
+      ["/url-page" :get uc/find-by-page-url-controller :route-name :url-find-page]
+      ["/url-redirect" :get uc/? :route-name :url-find-page]}))
