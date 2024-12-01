@@ -40,6 +40,8 @@
 (s/defn find-by-page-url-controller
   [{{:keys [database]}  :components
     {:keys [page size]} :query-params}]
-  (let [gateway (ug/->PostgresUrlGateway database)
-        output (up/execute gateway page size)]
+  (let [page-int (Integer/parseInt page)
+        size-int (Integer/parseInt size)
+        gateway (ug/->PostgresUrlGateway database)
+        output (up/execute gateway page-int size-int)]
     {:status 200 :body output}))

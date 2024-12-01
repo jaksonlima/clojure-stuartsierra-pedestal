@@ -36,7 +36,7 @@ Accept: application/json
 
 ###
 
-GET {{baseUrl}}/url/24d57fb1-3e22-4b07-9a4c-3de848bb0674/page?page=1&size=3
+GET {{baseUrl}}/url-page?page=1&size=9
 Accept: application/json
 
 ###S

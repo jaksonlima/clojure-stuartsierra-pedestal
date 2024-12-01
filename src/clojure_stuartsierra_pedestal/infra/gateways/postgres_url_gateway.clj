@@ -1,5 +1,6 @@
 (ns clojure-stuartsierra-pedestal.infra.gateways.postgres-url-gateway
-  (:require [clojure-stuartsierra-pedestal.domain.url :as u]
+  (:require [clojure-stuartsierra-pedestal.domain.pagination.pagination :as pg]
+            [clojure-stuartsierra-pedestal.domain.url :as u]
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
             [next.jdbc.sql :as sql]
             [schema.core :as s])
@@ -45,7 +46,11 @@
       (db->url result)))
 
   (find-by-page [_ page size]
-    (let [offset (* (- (Integer/parseInt page) 1) (Integer/parseInt size))
-          sql-query "SELECT * FROM url LIMIT ? OFFSET ?"
-          results (sql/query database [sql-query (Integer/parseInt size) offset])]
-      (mapv db->url results))))
+    (let [offset (* (- page 1) size)
+          sql "SELECT * FROM url LIMIT ? OFFSET ?"
+          sql-count "SELECT count(*) FROM url"
+          results (sql/query database [sql size offset])
+          result-count (sql/query database [sql-count])
+          count (:count (first result-count))
+          result-map (map db->url results)]
+      (pg/with result-map page size count))))
