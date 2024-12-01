@@ -6,19 +6,20 @@
   (:import (java.sql Timestamp)))
 
 (s/defn db->url :- u/Url [result]
-  (u/with (:url/id result)
-          (:url/name result)
-          (:url/origin result)
-          (:url/hash result)
-          (:url/active result)
-          (:url/created_at result)
-          (:url/updated_at result)))
+  (when result
+    (u/with (:url/id result)
+            (:url/name result)
+            (:url/origin result)
+            (:url/hash result)
+            (:url/active result)
+            (.toInstant (:url/created_at result))
+            (.toInstant (:url/updated_at result)))))
 
 (s/defrecord PostgresUrlGateway [database]
   ug/UrlGateway
   (create [_ url]
     (let [result (sql/insert! database :url
-                              {:id         (-> url :id :value)
+                              {:id         (-> url :id :value str)
                                :name       (:name url)
                                :origin     (:origin url)
                                :hash       (-> url :hash :value)
@@ -27,15 +28,15 @@
       (db->url result)))
 
   (update [_ url]
-    (let [result (sql/update! database :url
-                              {:name       (:name url)
-                               :origin     (:origin url)
-                               :hash       (-> url :hash :value)
-                               :active     (:active url)
-                               :created_at (Timestamp/from (:created-at url))
-                               :updated_at (Timestamp/from (:updated-at url))}
-                              ["id = ?" (-> url :id :value)])]
-      (db->url result)))
+    (sql/update! database :url
+                 {:name       (:name url)
+                  :origin     (:origin url)
+                  :hash       (-> url :hash :value)
+                  :active     (:active url)
+                  :created_at (Timestamp/from (:created-at url))
+                  :updated_at (Timestamp/from (:updated-at url))}
+                 ["id = ?" (-> url :id :value str)])
+    url)
 
   (find-by-id [_ url-id]
     (let [id (-> url-id :value str)
@@ -44,7 +45,7 @@
       (db->url result)))
 
   (find-by-page [_ page size]
-    (let [offset (* (- page 1) size)
+    (let [offset (* (- (Integer/parseInt page) 1) (Integer/parseInt size))
           sql-query "SELECT * FROM url LIMIT ? OFFSET ?"
-          results (sql/query database [sql-query size offset])]
-      (map db->url results))))
+          results (sql/query database [sql-query (Integer/parseInt size) offset])]
+      (mapv db->url results))))

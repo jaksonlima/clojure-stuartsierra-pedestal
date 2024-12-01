@@ -3,19 +3,27 @@
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
             [schema.core :as s]))
 
-(s/defschema Output {{:id     s/Str
-                      :name   s/Str
-                      :origin s/Str
-                      :hash   s/Str
-                      :active s/Bool}})
+(s/defschema Output {:id     s/Str
+                     :name   s/Str
+                     :origin s/Str
+                     :active s/Bool})
 
-(s/defn execute :- u/Url
+(s/defschema OutputPage {:items [Output]
+                         :page  s/Num
+                         :size  s/Num})
+
+(s/defn map-output :- Output [retrieve :- u/Url]
+  {:id     (-> retrieve :id :value str)
+   :name   (:name retrieve)
+   :origin (:origin retrieve)
+   :active (:active retrieve)})
+
+(s/defn execute :- OutputPage
   [gateway :- ug/UrlGateway
    page :- s/Int
    size :- s/Int]
-  (let [url-retrieved (ug/find-by-page gateway page size)]
-    {:id     (-> url-retrieved :id :value str)
-     :name   (:name url-retrieved)
-     :origin (:origin url-retrieved)
-     :hash   (-> url-retrieved :hash :value str)
-     :active (:active url-retrieved)}))
+  (let [url-retrieved (ug/find-by-page gateway page size)
+        outputs (map map-output url-retrieved)]
+    (assoc {} :items outputs
+              :page page
+              :size size)))

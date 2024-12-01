@@ -4,13 +4,13 @@
             [schema.core :as s])
   (:import (java.time Instant)))
 
-(s/defschema Output {{:id         s/Str
-                      :name       s/Str
-                      :origin     s/Str
-                      :hash       s/Str
-                      :active     s/Bool
-                      :created-at Instant
-                      :updated-at Instant}})
+(s/defschema Output {:id         s/Str
+                     :name       s/Str
+                     :origin     s/Str
+                     :hash       s/Str
+                     :active     s/Bool
+                     :created-at Instant
+                     :updated-at Instant})
 
 (s/defn execute :- Output
   [gateway :- ug/UrlGateway

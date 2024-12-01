@@ -23,7 +23,9 @@
         (cond-> (not (re-matches #"https?://.*" (:origin url)))
                 (conj "URL origin must start with http or https"))
         (cond-> (nil? (-> url :hash :value))
-                (conj "Hash should not be null")))))
+                (conj "Hash should not be null"))
+        (cond-> (nil? (:active url))
+                (conj "Active should not be null")))))
 
 (s/defn ^:private validated-throw :- Url
   [url :- Url]
@@ -34,13 +36,13 @@
 
 (s/defn create :- Url
   [name :- s/Str
-   url :- s/Str]
+   origin :- s/Str]
   (let [instant (Instant/now)
         url-id (ui/create)
         url-hash (uh/create)
         url {:id         url-id
              :name       name
-             :origin     url
+             :origin     origin
              :hash       url-hash
              :active     true
              :created-at instant

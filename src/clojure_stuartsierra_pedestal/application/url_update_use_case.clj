@@ -4,9 +4,9 @@
             [clojure-stuartsierra-pedestal.domain.url-id :as ui]
             [schema.core :as s]))
 
-(s/defschema Input {:id     s/Str
-                    :name   s/Str
-                    :origin s/Str})
+(s/defschema Input {:id   s/Str
+                    :name s/Str
+                    :url  s/Str})
 (s/defschema Output {:id s/Str})
 
 (s/defn execute :- Output
@@ -19,4 +19,4 @@
         url-retrieve (ug/find-by-id gateway url-id)
         url-updated (u/update url-retrieve input-name input-url)]
     (ug/update gateway url-updated)
-    {:id (-> url-updated :id :value str)}))
+    {:id input-id}))
