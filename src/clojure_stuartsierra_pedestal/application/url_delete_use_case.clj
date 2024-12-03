@@ -10,4 +10,4 @@
   (let [url-id (ui/with id)
         url-retrieve (ug/find-by-id gateway url-id)
         url-updated (u/deactivate url-retrieve)]
-    (ug/update gateway url-updated)))
+    (ug/update! gateway url-updated)))

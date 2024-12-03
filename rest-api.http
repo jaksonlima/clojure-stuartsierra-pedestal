@@ -20,7 +20,7 @@ Accept: application/json
 
 ###
 
-GET {{baseUrl}}/url/43d83e95-bf66-47db-afa3-2859a038fc88
+GET {{baseUrl}}/url/24d57fb1-3e22-4b07-9a4c-3de848bb0674
 Accept: application/json
 
 ###
@@ -41,6 +41,6 @@ Accept: application/json
 
 ###
 
-GET {{baseUrl}}/url-redirect/x0X7M8
+GET {{baseUrl}}/url-redirect/tHxkD4
 
 ###S

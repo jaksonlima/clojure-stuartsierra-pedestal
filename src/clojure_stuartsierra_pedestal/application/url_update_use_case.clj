@@ -17,6 +17,6 @@
         input-url (:url input)
         url-id (ui/with input-id)
         url-retrieve (ug/find-by-id gateway url-id)
-        url-updated (u/update url-retrieve input-name input-url)]
-    (ug/update gateway url-updated)
+        url-updated (u/update-url url-retrieve input-name input-url)]
+    (ug/update! gateway url-updated)
     {:id input-id}))

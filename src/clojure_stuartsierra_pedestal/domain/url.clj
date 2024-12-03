@@ -49,7 +49,7 @@
              :updated-at instant}]
     (validated-throw url)))
 
-(s/defn update :- Url
+(s/defn update-url :- Url
   [url :- Url
    name :- s/Str
    origin :- s/Str]

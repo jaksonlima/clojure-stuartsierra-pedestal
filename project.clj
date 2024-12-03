@@ -24,9 +24,4 @@
                  [org.slf4j/slf4j-simple "2.0.10"]]
   :main ^:skip-aot clojure-stuartsierra-pedestal.infra.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}}
-  ;:main ^:skip-aot clojure-stuartsierra-pedestal.infra.core
-  ;:target-path "target/%s"
-  ;:profiles {:uberjar {:aot :all :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}}
-  ;:repl-options {:init-ns clojure-stuartsierra-pedestal.infra.core}
-  )
+  :profiles {:uberjar {:aot :all}})

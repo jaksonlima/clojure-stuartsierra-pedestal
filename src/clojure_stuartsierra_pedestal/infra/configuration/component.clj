@@ -12,7 +12,7 @@
                                                       :pedestal (component/using (pedestal/new-pedestal) [:config :database :routes])))
 
 (defn start []
-  (pprint (component/start system-component)))
+  (component/start system-component))
 
 (defn stop []
   (component/stop system-component))

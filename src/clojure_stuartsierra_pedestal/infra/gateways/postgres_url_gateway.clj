@@ -18,7 +18,7 @@
 
 (s/defrecord PostgresUrlGateway [database]
   ug/UrlGateway
-  (create [_ url]
+  (create! [_ url]
     (let [result (sql/insert! database :url
                               {:id         (-> url :id :value str)
                                :name       (:name url)
@@ -28,7 +28,7 @@
                                :updated_at (Timestamp/from (:updated-at url))})]
       (db->url result)))
 
-  (update [_ url]
+  (update! [_ url]
     (sql/update! database :url
                  {:name       (:name url)
                   :origin     (:origin url)
