@@ -1,8 +1,9 @@
 (ns clojure-stuartsierra-pedestal.infra.core
   (:require [clojure-stuartsierra-pedestal.infra.configuration.component :as component]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log])
+  (:gen-class))
 
-(defn -main []
+(defn -main [& _]
   (log/info "Starting system")
   (component/start)
   (log/info "System started")

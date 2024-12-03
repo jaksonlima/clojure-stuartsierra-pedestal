@@ -1,6 +1,7 @@
 (ns clojure-stuartsierra-pedestal.infra.controllers.url-controller
   (:require [clojure-stuartsierra-pedestal.application.url-create-use-case :as uc]
             [clojure-stuartsierra-pedestal.application.url-delete-use-case :as ud]
+            [clojure-stuartsierra-pedestal.application.url-find-by-hash-use-case :as uh]
             [clojure-stuartsierra-pedestal.application.url-find-by-id-use-case :as uf]
             [clojure-stuartsierra-pedestal.application.url-find-by-page-use-case :as up]
             [clojure-stuartsierra-pedestal.application.url-update-use-case :as uu]
@@ -45,3 +46,11 @@
         gateway (ug/->PostgresUrlGateway database)
         output (up/execute gateway page-int size-int)]
     {:status 200 :body output}))
+
+(s/defn redirect-url-controller
+  [{{:keys [database]} :components
+    {:keys [hash]}     :path-params}]
+  (let [gateway (ug/->PostgresUrlGateway database)
+        output (uh/execute gateway hash)]
+    {:status  301
+     :headers {"Location" output}}))

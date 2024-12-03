@@ -45,6 +45,12 @@
           result (first (sql/query database [sql id]))]
       (db->url result)))
 
+  (find-by-hash [_ url-hash]
+    (let [hash (-> url-hash :value str)
+          sql "SELECT * FROM url where url.hash = ?"
+          result (first (sql/query database [sql hash]))]
+      (db->url result)))
+
   (find-by-page [_ page size]
     (let [offset (* (- page 1) size)
           sql "SELECT * FROM url LIMIT ? OFFSET ?"
