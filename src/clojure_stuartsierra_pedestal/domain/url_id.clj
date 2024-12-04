@@ -4,9 +4,17 @@
 
 (s/defschema UrlId {:value s/Uuid})
 
+(s/defn ^:private validated-throw :- UrlId
+  [value :- s/Str]
+  (if value
+    value
+    (throw (ex-info "Validation aggregate UrlId"
+                    {:errors ["UrlId should not be null"]}))))
+
 (s/defn create :- UrlId []
   {:value (UUID/randomUUID)})
 
 (s/defn with :- UrlId
   [value :- s/Str]
+  (validated-throw value)
   {:value (UUID/fromString value)})

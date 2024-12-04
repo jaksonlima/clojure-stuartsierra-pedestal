@@ -4,28 +4,32 @@
             [schema.core :as s])
   (:import (java.time Instant)))
 
-(s/defschema Url {:id         ui/UrlId
-                  :name       s/Str
-                  :origin     s/Str
-                  :hash       uh/UrlHash
-                  :active     s/Bool
-                  :created-at Instant
-                  :updated-at Instant})
+(s/defschema ^:private Url {:id         ui/UrlId
+                            :name       s/Str
+                            :origin     s/Str
+                            :hash       uh/UrlHash
+                            :active     s/Bool
+                            :created-at Instant
+                            :updated-at Instant})
 
 (s/defn ^:private validate :- [s/Str]
   [url :- Url]
   (let [validate-fields []]
     (-> validate-fields
-        (cond-> (nil? (-> url :id :value))
-                (conj "UrlID should not be null"))
         (cond-> (nil? (:name url))
                 (conj "Name should not be null"))
-        (cond-> (not (re-matches #"https?://.*" (:origin url)))
+        (cond-> (nil? (:origin url))
+                (conj "Origin should not be null"))
+        (cond-> (and (:origin url) (not (re-matches #"https?://.*" (:origin url))))
                 (conj "URL origin must start with http or https"))
         (cond-> (nil? (-> url :hash :value))
                 (conj "Hash should not be null"))
         (cond-> (nil? (:active url))
-                (conj "Active should not be null")))))
+                (conj "Active should not be null"))
+        (cond-> (nil? (:created-at url))
+                (conj "Created at should not be null"))
+        (cond-> (nil? (:updated-at url))
+                (conj "Updated at should not be null")))))
 
 (s/defn ^:private validated-throw :- Url
   [url :- Url]
