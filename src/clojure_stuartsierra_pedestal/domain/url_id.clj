@@ -9,7 +9,7 @@
   (if value
     value
     (throw (ex-info "Validation aggregate UrlId"
-                    {:errors ["UrlId should not be null"]}))))
+                    {:errors ["Id should not be null"]}))))
 
 (s/defn create :- UrlId []
   {:value (UUID/randomUUID)})
