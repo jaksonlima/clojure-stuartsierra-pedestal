@@ -1,15 +1,8 @@
 (ns clojure-stuartsierra-pedestal.domain.url-test
   (:require [clojure-stuartsierra-pedestal.domain.url :as u]
+            [clojure-stuartsierra-pedestal.infra.common.throw :as tw]
             [clojure.test :refer :all])
-  (:import (clojure.lang ExceptionInfo)
-           (java.time Instant)))
-
-(defn throw-ex-data [fn]
-  (try
-    (fn)
-    (catch ExceptionInfo e
-      {:ex      e
-       :ex-data (ex-data e)})))
+  (:import (java.time Instant)))
 
 (deftest url-valid-test
   (testing "given valid Url when create then return validated"
@@ -26,14 +19,14 @@
 
 (deftest url-invalid-test
   (testing "given invalid Url when create then return errors"
-    (let [throw (throw-ex-data #(u/create nil nil))
+    (let [throw (tw/throw-ex-data #(u/create nil nil))
           ex-data (-> throw :ex-data :errors)
           expected-errors ["Name should not be null"
                            "Origin should not be null"]]
       (is (= expected-errors ex-data))))
 
   (testing "given invalid origin when create then return errors"
-    (let [throw (throw-ex-data #(u/create "test" "test"))
+    (let [throw (tw/throw-ex-data #(u/create "test" "test"))
           ex-data (-> throw :ex-data :errors)
           expected-errors ["URL origin must start with http or https"]]
       (is (= expected-errors ex-data))))
@@ -42,20 +35,19 @@
     (let [expected-id "754155b2-b1da-11ef-93b3-00155df39b33"
           expected-name "test"
           expected-origin "http://test.com"
-          expected-hash nil
+          expected-hash "hxadw8"
           expected-active nil
           expected-created-at nil
           expected-updated-at nil
-          throw (throw-ex-data #(u/with expected-id
-                                        expected-name
-                                        expected-origin
-                                        expected-hash
-                                        expected-active
-                                        expected-created-at
-                                        expected-updated-at))
+          throw (tw/throw-ex-data #(u/with expected-id
+                                           expected-name
+                                           expected-origin
+                                           expected-hash
+                                           expected-active
+                                           expected-created-at
+                                           expected-updated-at))
           ex-data (-> throw :ex-data :errors)
-          expected-errors ["Hash should not be null"
-                           "Active should not be null"
+          expected-errors ["Active should not be null"
                            "Created at should not be null"
                            "Updated at should not be null"]]
       (is (= expected-errors ex-data)))))

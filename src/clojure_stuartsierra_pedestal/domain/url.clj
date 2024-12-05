@@ -4,13 +4,13 @@
             [schema.core :as s])
   (:import (java.time Instant)))
 
-(s/defschema ^:private Url {:id         ui/UrlId
-                            :name       s/Str
-                            :origin     s/Str
-                            :hash       uh/UrlHash
-                            :active     s/Bool
-                            :created-at Instant
-                            :updated-at Instant})
+(s/defschema Url {:id         ui/UrlId
+                  :name       s/Str
+                  :origin     s/Str
+                  :hash       uh/UrlHash
+                  :active     s/Bool
+                  :created-at Instant
+                  :updated-at Instant})
 
 (s/defn ^:private validate :- [s/Str]
   [url :- Url]
