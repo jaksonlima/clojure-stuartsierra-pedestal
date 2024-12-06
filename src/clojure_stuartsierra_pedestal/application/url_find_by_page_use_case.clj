@@ -9,7 +9,8 @@
                      :origin s/Str
                      :active s/Bool})
 
-(s/defn map-output :- Output [retrieve :- u/Url]
+(s/defn map-output :- Output
+  [retrieve :- u/Url]
   {:id     (-> retrieve :id :value str)
    :name   (:name retrieve)
    :origin (:origin retrieve)
@@ -19,7 +20,5 @@
   [gateway :- ug/UrlGateway
    page :- s/Int
    size :- s/Int]
-  (let [url-paged (ug/find-by-page gateway page size)
-        items (:items url-paged)
-        mapped-items (map map-output items)]
-    (pg/from url-paged mapped-items)))
+  (let [url-paged (ug/find-by-page gateway page size)]
+    (pg/from url-paged map-output)))

@@ -22,8 +22,6 @@
                 (conj "Origin should not be null"))
         (cond-> (and (:origin url) (not (re-matches #"https?://.*" (:origin url))))
                 (conj "URL origin must start with http or https"))
-        (cond-> (nil? (-> url :hash :value))
-                (conj "Hash should not be null"))
         (cond-> (nil? (:active url))
                 (conj "Active should not be null"))
         (cond-> (nil? (:created-at url))
