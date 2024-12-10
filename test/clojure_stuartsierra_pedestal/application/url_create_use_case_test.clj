@@ -4,14 +4,12 @@
             [clojure.test :refer :all]))
 
 (deftest test
-  (testing "given when then"
-    (let [mock-gateway-create (reify ug/UrlGateway
-                                (create! [_ url] url))
-          expected-input {:name "test" :url "http://test.com"}
+  (testing "given valida command when calls create then return it"
+    (let [expected-input {:name "test" :url "http://test.com"}
+          mock-gateway-create (reify ug/UrlGateway
+                                (create! [_ url]
+                                  (is (= (:name url) (:name expected-input)))
+                                  (is (= (:origin url) (:url expected-input)))
+                                  url))
           result (uc/execute mock-gateway-create expected-input)]
-
-      (is (= (:name expected-input) (:name result)))
-      (is (= (:url expected-input) (:origin result)))
-      )
-    )
-  )
+      (is (:id result)))))

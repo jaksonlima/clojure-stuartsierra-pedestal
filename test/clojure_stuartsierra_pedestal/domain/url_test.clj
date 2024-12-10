@@ -15,7 +15,8 @@
       (is (some? (-> url :hash :value)))
       (is true (:active url))
       (is (some? (:created-at url)))
-      (is (some? (:updated-at url))))))
+      (is (some? (:updated-at url)))
+      (is (= (:created-at url) (:updated-at url))))))
 
 (deftest url-invalid-test
   (testing "given invalid Url when create then return errors"
