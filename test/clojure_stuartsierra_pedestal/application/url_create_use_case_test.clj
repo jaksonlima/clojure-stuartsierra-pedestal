@@ -3,7 +3,7 @@
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
             [clojure.test :refer :all]))
 
-(deftest test
+(deftest url-create-use-case-test
   (testing "given valida command when calls create then return it"
     (let [expected-input {:name "test" :url "http://test.com"}
           mock-gateway-create (reify ug/UrlGateway
