@@ -55,13 +55,14 @@
   [url :- Url
    name :- s/Str
    origin :- s/Str]
-  (let [url-updated (merge url {:name       name
-                                :origin     origin
-                                :updated-at (Instant/now)})]
+  (let [url-updated (assoc url :name name
+                               :origin origin
+                               :updated-at (Instant/now))]
     (validated-throw url-updated)))
 
 (s/defn deactivate :- Url [url :- Url]
-  (assoc url :active false))
+  (assoc url :active false
+             :updated-at (Instant/now)))
 
 (s/defn with :- Url [id :- s/Str
                      name :- s/Str
