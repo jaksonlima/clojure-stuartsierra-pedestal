@@ -27,4 +27,6 @@
                  [org.clojure/test.check "1.1.1"]]
   :main ^:skip-aot clojure-stuartsierra-pedestal.infra.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :uberjar-name "shortcut-url.jar"
+  :profiles {:uberjar {:aot :all}
+             :integration {}})
