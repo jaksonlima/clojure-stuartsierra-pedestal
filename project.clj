@@ -21,7 +21,10 @@
                  [hikari-cp "2.13.0"]
 
                  [org.clojure/tools.logging "1.3.0"]
-                 [org.slf4j/slf4j-simple "2.0.10"]]
+                 [org.slf4j/slf4j-simple "2.0.10"]
+
+                 [prismatic/schema-generators "0.1.5"]
+                 [org.clojure/test.check "1.1.1"]]
   :main ^:skip-aot clojure-stuartsierra-pedestal.infra.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

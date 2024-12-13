@@ -1,9 +1,9 @@
 (ns clojure-stuartsierra-pedestal.domain.pagination.pagination
   (:require [schema.core :as s]))
 
-(s/defschema PaginationItems [{s/Keyword s/Any}])
+(s/defschema PaginationItems {s/Keyword s/Any})
 
-(s/defschema Pagination {:items       PaginationItems
+(s/defschema Pagination {:items       [PaginationItems]
                          :page        s/Num
                          :size        s/Num
                          :total-pages s/Num})

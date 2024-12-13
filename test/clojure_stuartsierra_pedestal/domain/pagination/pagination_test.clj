@@ -17,7 +17,7 @@
       (is (= expected-total-items (:total-items pagination)))
       (is (= expected-total-pages (:total-pages pagination))))))
 
-(deftest pagination-test
+(deftest pagination-fn-mapping-test
   (testing "given valid fn-mapping when calls from pagination then instance pagination"
     (let [items [{:id 10 :name "will"}]
           expected-items [{:identity 10 :title "will"}]
