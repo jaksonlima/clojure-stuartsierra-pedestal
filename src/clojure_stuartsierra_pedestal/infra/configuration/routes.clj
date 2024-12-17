@@ -1,8 +1,10 @@
 (ns clojure-stuartsierra-pedestal.infra.configuration.routes
   (:require [clojure-stuartsierra-pedestal.infra.controllers.url-controller :as uc]
-            [io.pedestal.http.route :as route]))
+            [io.pedestal.http.route :as route]
+            [clojure-stuartsierra-pedestal.domain.exceptions.domain-exception :as de]))
 
 (defn home [_]
+  (throw (de/domain-ex-info "error domain URL"))
   {:status 200, :body {:message "this is home"}})
 
 (def routes

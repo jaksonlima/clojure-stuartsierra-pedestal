@@ -8,13 +8,11 @@
             [io.pedestal.interceptor :as i])
   (:use [clojure.pprint]))
 
-(def ^:private supported-types ["text/html"
-                                "application/edn"
-                                "application/json"
-                                "text/plain"])
-
 (def ^:private content-negotiation-interceptor
-  (content-negotiation/negotiate-content supported-types))
+  (content-negotiation/negotiate-content ["text/html"
+                                          "application/edn"
+                                          "application/json"
+                                          "text/plain"]))
 
 (def ^:private coerce-response-body-interceptor
   (i/interceptor
@@ -34,6 +32,18 @@
                                 :body coerced-body)]
          (assoc context :response updated-response)))}))
 
+(def ^:private error-interceptor
+  (i/interceptor
+    {:name  ::error-interceptor
+     :error (fn [context exception]
+              (let [data (ex-data exception)]
+                (if (= (:type data) :domain)
+                  (assoc context :response {:status  400
+                                            :headers {"Content-Type" "application/json"}
+                                            :body    (json/write-str {:details (-> data :exception .getMessage)
+                                                                      :errors  (:errors data [])})})
+                  (throw exception))))}))
+
 (defn ^:private request-database-interceptor [service-map database]
   (let [interceptor (i/interceptor
                       {:name ::request-database
@@ -44,7 +54,8 @@
 
 (def ^:private common-interceptors [content-negotiation-interceptor
                                     coerce-response-body-interceptor
-                                    (body-params/body-params)])
+                                    (body-params/body-params)
+                                    error-interceptor])
 
 (defn add-interceptors [service-map]
   (reduce (fn [acc interceptor]
