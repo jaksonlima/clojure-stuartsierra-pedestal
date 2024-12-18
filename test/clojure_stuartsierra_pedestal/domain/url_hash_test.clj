@@ -1,6 +1,6 @@
 (ns clojure-stuartsierra-pedestal.domain.url-hash-test
   (:require [clojure-stuartsierra-pedestal.domain.url-hash :as uh]
-            [clojure-stuartsierra-pedestal.infra.common.throw :as tw]
+            [clojure-stuartsierra-pedestal.common.throw :as tw]
             [clojure.test :refer :all]))
 (deftest url-hash-valid-test
   (testing "given valid UrlHash when create then return validated"

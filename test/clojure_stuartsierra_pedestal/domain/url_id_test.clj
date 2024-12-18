@@ -1,6 +1,6 @@
 (ns clojure-stuartsierra-pedestal.domain.url-id-test
   (:require [clojure-stuartsierra-pedestal.domain.url-id :as ui]
-            [clojure-stuartsierra-pedestal.infra.common.throw :as tw]
+            [clojure-stuartsierra-pedestal.common.throw :as tw]
             [clojure.test :refer :all]))
 (deftest url-id-valid-test
   (testing "given valid UrlId when create then return validated"

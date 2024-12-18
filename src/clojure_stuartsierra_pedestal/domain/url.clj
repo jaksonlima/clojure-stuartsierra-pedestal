@@ -1,5 +1,6 @@
 (ns clojure-stuartsierra-pedestal.domain.url
-  (:require [clojure-stuartsierra-pedestal.domain.url-hash :as uh]
+  (:require [clojure-stuartsierra-pedestal.domain.exceptions.domain :as de]
+            [clojure-stuartsierra-pedestal.domain.url-hash :as uh]
             [clojure-stuartsierra-pedestal.domain.url-id :as ui]
             [schema.core :as s])
   (:import (java.time Instant)))
@@ -16,9 +17,9 @@
   [url :- Url]
   (let [validate-fields []]
     (-> validate-fields
-        (cond-> (nil? (:name url))
+        (cond-> (empty? (:name url))
                 (conj "Name should not be null"))
-        (cond-> (nil? (:origin url))
+        (cond-> (empty? (:origin url))
                 (conj "Origin should not be null"))
         (cond-> (and (:origin url) (not (re-matches #"https?://.*" (:origin url))))
                 (conj "URL origin must start with http or https"))
@@ -32,9 +33,8 @@
 (s/defn ^:private validated-throw :- Url
   [url :- Url]
   (let [validated (validate url)]
-    (if (not (empty? validated))
-      (throw (ex-info "Validation aggregate Url" {:errors validated}))
-      url)))
+    (when (not (empty? validated))
+      (throw (de/domain-ex-info "Validation aggregate Url" validated)))))
 
 (s/defn create :- Url
   [name :- s/Str
@@ -49,7 +49,8 @@
              :active     true
              :created-at instant
              :updated-at instant}]
-    (validated-throw url)))
+    (validated-throw url)
+    url))
 
 (s/defn update-url :- Url
   [url :- Url
@@ -58,7 +59,8 @@
   (let [url-updated (assoc url :name name
                                :origin origin
                                :updated-at (Instant/now))]
-    (validated-throw url-updated)))
+    (validated-throw url-updated)
+    url-updated))
 
 (s/defn deactivate :- Url [url :- Url]
   (assoc url :active false
@@ -80,4 +82,5 @@
              :active     active
              :created-at created-at
              :updated-at updated-at}]
-    (validated-throw url)))
+    (validated-throw url)
+    url))

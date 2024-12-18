@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.domain.exceptions.domain-exception
+(ns clojure-stuartsierra-pedestal.domain.exceptions.domain
   (:require [schema.core :as s])
   (:import (clojure.lang ExceptionInfo)))
 

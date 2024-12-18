@@ -1,5 +1,6 @@
 (ns clojure-stuartsierra-pedestal.domain.url-hash
-  (:require [schema.core :as s]))
+  (:require [clojure-stuartsierra-pedestal.domain.exceptions.domain :as de]
+            [schema.core :as s]))
 
 (s/defschema UrlHash {:value s/Str})
 
@@ -10,10 +11,8 @@
 
 (s/defn ^:private validated-throw :- UrlHash
   [value :- s/Str]
-  (if value
-    value
-    (throw (ex-info "Validation aggregate UrlHash"
-                    {:errors ["Hash should not be null"]}))))
+  (when (empty? value)
+    (throw (de/domain-ex-info "Validation aggregate UrlHash" ["Hash should not be null"]))))
 
 (s/defn create :- UrlHash []
   {:value (generate-hash)})
