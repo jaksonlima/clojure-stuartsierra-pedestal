@@ -5,11 +5,11 @@
 
 (defn -main [& _]
   (log/info "Starting system")
-  (component/start)
-  (log/info "System started")
-  (.addShutdownHook
-    (Runtime/getRuntime)
-    (new Thread (fn []
-                  (log/info "Stopping system")
-                  (component/stop)
-                  (log/info "System stopped")))))
+  (let [system-start (component/start component/system-component-prd)]
+    (log/info "Started system")
+    (.addShutdownHook
+      (Runtime/getRuntime)
+      (new Thread (fn []
+                    (log/info "Stopping system")
+                    (component/stop system-start)
+                    (log/info "Stopped system"))))))

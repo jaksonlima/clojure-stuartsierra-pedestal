@@ -10,47 +10,47 @@
 
 (s/defn create-url-controller
   [{:keys              [json-params]
-    {:keys [database]} :components}]
-  (let [gateway (ug/->PostgresUrlGateway database)
+    {:keys [datasource]} :components}]
+  (let [gateway (ug/->PostgresUrlGateway datasource)
         output (uc/execute gateway json-params)]
     {:status 201 :body output}))
 
 (s/defn update-url-controller
   [{:keys              [json-params]
-    {:keys [database]} :components
+    {:keys [datasource]} :components
     {:keys [id]}       :path-params}]
   (let [input (assoc json-params :id id)
-        gateway (ug/->PostgresUrlGateway database)
+        gateway (ug/->PostgresUrlGateway datasource)
         output (uu/execute gateway input)]
     {:status 200 :body output}))
 
 (s/defn delete-url-controller
-  [{{:keys [database]} :components
+  [{{:keys [datasource]} :components
     {:keys [id]}       :path-params}]
-  (let [gateway (ug/->PostgresUrlGateway database)]
+  (let [gateway (ug/->PostgresUrlGateway datasource)]
     (ud/execute gateway id)
     {:status 200}))
 
 (s/defn find-by-id-url-controller
-  [{{:keys [database]} :components
+  [{{:keys [datasource]} :components
     {:keys [id]}       :path-params}]
-  (let [gateway (ug/->PostgresUrlGateway database)
+  (let [gateway (ug/->PostgresUrlGateway datasource)
         output (uf/execute gateway id)]
     {:status 200 :body output}))
 
 (s/defn find-by-page-url-controller
-  [{{:keys [database]}  :components
+  [{{:keys [datasource]}  :components
     {:keys [page size]} :query-params}]
   (let [page-int (Integer/parseInt page)
         size-int (Integer/parseInt size)
-        gateway (ug/->PostgresUrlGateway database)
+        gateway (ug/->PostgresUrlGateway datasource)
         output (up/execute gateway page-int size-int)]
     {:status 200 :body output}))
 
 (s/defn redirect-url-controller
-  [{{:keys [database]} :components
+  [{{:keys [datasource]} :components
     {:keys [hash]}     :path-params}]
-  (let [gateway (ug/->PostgresUrlGateway database)
+  (let [gateway (ug/->PostgresUrlGateway datasource)
         output (uh/execute gateway hash)]
     {:status  301
      :headers {"Location" output}}))

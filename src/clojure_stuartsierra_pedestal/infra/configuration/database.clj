@@ -6,14 +6,14 @@
 
 (defrecord Database [config]
   component/Lifecycle
-  (start [_]
+  (start [this]
     (log/info "Start Database Server...")
-    (let [config (:database config)]
-      (hikari/make-datasource config)))
+    (let [database-config (:database config)]
+      (assoc this :datasource (hikari/make-datasource database-config))))
   (stop [this]
     (log/info "Stop Database Server...")
-    (when-let [ds (:datasource this)]
-      (.close ds))))
+    (.close (:datasource this))
+    (assoc this :datasource nil)))
 
 (defn new-database []
   (map->Database {}))

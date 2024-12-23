@@ -49,7 +49,7 @@
                       {:name ::request-database
                        :enter
                        (fn [context]
-                         (assoc-in context [:request :components :database] database))})]
+                         (assoc-in context [:request :components :datasource] (:datasource database)))})]
     (update service-map ::http/interceptors conj interceptor)))
 
 (def ^:private common-interceptors [content-negotiation-interceptor
@@ -65,20 +65,23 @@
 
 (defrecord Pedestal [config database routes]
   component/Lifecycle
-  (start [_]
+  (start [this]
     (log/info "Start Pedestal Server...")
-    (-> {:env          (keyword (:env config))
-         ::http/port   (:port config)
-         ::http/routes routes
-         ::http/type   :jetty
-         ::http/join?  false}
-        http/default-interceptors
-        add-interceptors
-        (request-database-interceptor database)
-        http/create-server
-        http/start))
-  (stop [_]
-    (log/info "Stop Pedestal Server...")))
+    (let [started (-> {:env          (keyword (:env config))
+                       ::http/port   (:port config)
+                       ::http/routes routes
+                       ::http/type   :jetty
+                       ::http/join?  false}
+                      http/default-interceptors
+                      add-interceptors
+                      (request-database-interceptor database)
+                      http/create-server
+                      http/start)]
+      (assoc this :service started)))
+  (stop [this]
+    (log/info "Stop Pedestal Server...")
+    (http/stop (:service this))
+    (assoc this :service nil)))
 
 (defn new-pedestal []
   (map->Pedestal {}))

@@ -1,20 +1,20 @@
 (ns clojure-stuartsierra-pedestal.integration.core
-  (:require [clojure.test :refer :all]))
+  (:require [clojure-stuartsierra-pedestal.infra.configuration.component :as component]
+            [clojure.test :refer :all]
+            [io.pedestal.test :refer [response-for]]))
 
-(defn setup-and-teardown [test]
-  (println "Setup antes do teste")
-  (try
-    (test)                                                  ;; Executa o teste decorado
-    (finally
-      (println "Teardown após o teste"))))
+(def system (atom nil))
 
-;(use-fixtures :each setup-and-teardown)
-(use-fixtures :once setup-and-teardown)
+(use-fixtures :once
+              (fn [tests]
+                (reset! system (component/start component/system-component-dev))
+                (try
+                  (tests)
+                  (finally
+                    (component/stop @system)))))
 
-(deftest test-example-1
-  (println "Executando teste 1")
-  (is (= 1 1)))
-
-(deftest test-example-2
-  (println "Executando teste 2")
-  (is (= 2 2)))
+(deftest test-routes
+  (testing "Mock route responds correctly"
+    (let [service (-> @system :pedestal :service :io.pedestal.http/service-fn)
+          response (response-for service :get "/url-page?page=1&size=1")]
+      (is (= 200 (:status response))))))
