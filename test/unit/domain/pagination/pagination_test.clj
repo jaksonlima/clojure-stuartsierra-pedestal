@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.domain.pagination.pagination-test
+(ns unit.domain.pagination.pagination-test
   (:require [clojure-stuartsierra-pedestal.domain.pagination.pagination :as p]
             [clojure.test :refer :all]
             ))

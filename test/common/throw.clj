@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.common.throw
+(ns common.throw
   (:import (clojure.lang ExceptionInfo)))
 
 (defn throw-ex-data [fn]

@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.common.pedestal
+(ns common.pedestal
   (:require [clojure.test :refer :all]))
 
 (defn service-fn

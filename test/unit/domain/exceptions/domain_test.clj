@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.domain.exceptions.domain-test
+(ns unit.domain.exceptions.domain-test
   (:require [clojure-stuartsierra-pedestal.domain.exceptions.domain :as de]
             [clojure.test :refer :all]))
 

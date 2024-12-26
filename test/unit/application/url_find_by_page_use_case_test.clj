@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.application.url-find-by-page-use-case-test
+(ns unit.application.url-find-by-page-use-case-test
   (:require [clojure-stuartsierra-pedestal.application.url-find-by-page-use-case :as up]
             [clojure-stuartsierra-pedestal.domain.pagination.pagination :as pg]
             [clojure-stuartsierra-pedestal.domain.url :as u]

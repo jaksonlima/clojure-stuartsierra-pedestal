@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.application.url-delete-use-case-test
+(ns unit.application.url-delete-use-case-test
   (:require [clojure-stuartsierra-pedestal.application.url-delete-use-case :as ud]
             [clojure-stuartsierra-pedestal.domain.url :as u]
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]

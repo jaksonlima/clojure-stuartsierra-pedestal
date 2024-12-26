@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.domain.url-hash-test
+(ns unit.domain.url-hash-test
   (:require [clojure-stuartsierra-pedestal.domain.url-hash :as uh]
             [clojure-stuartsierra-pedestal.common.throw :as tw]
             [clojure.test :refer :all]))

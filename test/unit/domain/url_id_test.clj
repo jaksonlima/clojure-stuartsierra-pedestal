@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.domain.url-id-test
+(ns unit.domain.url-id-test
   (:require [clojure-stuartsierra-pedestal.domain.url-id :as ui]
             [clojure-stuartsierra-pedestal.common.throw :as tw]
             [clojure.test :refer :all]))

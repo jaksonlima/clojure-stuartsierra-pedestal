@@ -1,5 +1,5 @@
-(ns clojure-stuartsierra-pedestal.common.throw-test
-  (:require [clojure-stuartsierra-pedestal.common.throw :as tw]
+(ns common.throw-test
+  (:require [common.throw :as tw]
             [clojure.test :refer :all]))
 
 (deftest throw-test

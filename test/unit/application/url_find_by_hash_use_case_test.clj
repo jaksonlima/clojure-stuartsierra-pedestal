@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.application.url-find-by-hash-use-case-test
+(ns unit.application.url-find-by-hash-use-case-test
   (:require [clojure-stuartsierra-pedestal.application.url-find-by-hash-use-case :as uh]
             [clojure-stuartsierra-pedestal.domain.url :as u]
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]

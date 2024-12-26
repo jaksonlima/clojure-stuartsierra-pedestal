@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.integration.core
+(ns integration.core
   (:require [clojure-stuartsierra-pedestal.infra.configuration.component :as component]
             [clojure.test :refer :all]
             [io.pedestal.test :refer [response-for]]))

@@ -29,4 +29,4 @@
   :target-path "target/%s"
   :uberjar-name "shortcut-url.jar"
   :profiles {:uberjar {:aot :all}
-             :integration {}})
+             :integration {:test-paths ["test/integration"]}})
