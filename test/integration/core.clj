@@ -1,20 +1,13 @@
 (ns integration.core
-  (:require [clojure-stuartsierra-pedestal.infra.configuration.component :as component]
-            [clojure.test :refer :all]
+  (:require [clojure.test :refer :all]
+            [common.pedestal :as cp]
+            [common.server :refer [*system* with-system]]
             [io.pedestal.test :refer [response-for]]))
 
-(def system (atom nil))
-
-(use-fixtures :once
-              (fn [tests]
-                (reset! system (component/start component/system-component-dev))
-                (try
-                  (tests)
-                  (finally
-                    (component/stop @system)))))
+(use-fixtures :once with-system)
 
 (deftest test-routes
   (testing "Mock route responds correctly"
-    (let [service (-> @system :pedestal :service :io.pedestal.http/service-fn)
+    (let [service (cp/pedestal-service-fn *system*)
           response (response-for service :get "/url-page?page=1&size=1")]
       (is (= 200 (:status response))))))
