@@ -6,4 +6,5 @@
   (testing "given valid params when calls throw-ex-data then return it errors"
     (let [data (tw/throw-ex-data #(throw (ex-info "test" {:error []})))]
       (is (contains? data :ex))
-      (is (contains? data :ex-data)))))
+      (is (contains? data :data))
+      (is (contains? data :message)))))

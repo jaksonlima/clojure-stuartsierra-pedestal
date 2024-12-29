@@ -1,5 +1,6 @@
 (ns clojure-stuartsierra-pedestal.application.url-find-by-id-use-case
-  (:require [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
+  (:require [clojure-stuartsierra-pedestal.domain.exceptions.domain :as de]
+            [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
             [clojure-stuartsierra-pedestal.domain.url-id :as ui]
             [schema.core :as s])
   (:import (java.time Instant)))
@@ -17,6 +18,8 @@
    id :- s/Str]
   (let [url-id (ui/with id)
         url-retrieved (ug/find-by-id gateway url-id)]
+    (when-not url-retrieved
+      (throw (de/not-found (format "Url with ID %s was not found." id))))
     {:id         (-> url-retrieved :id :value str)
      :name       (:name url-retrieved)
      :origin     (:origin url-retrieved)

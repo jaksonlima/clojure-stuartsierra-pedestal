@@ -1,6 +1,6 @@
 (ns unit.domain.url-test
   (:require [clojure-stuartsierra-pedestal.domain.url :as u]
-            [clojure-stuartsierra-pedestal.common.throw :as tw]
+            [common.throw :as tw]
             [clojure.test :refer :all])
   (:import (java.time Instant)))
 
@@ -21,14 +21,14 @@
 (deftest url-invalid-test
   (testing "given invalid Url when create then return errors"
     (let [throw (tw/throw-ex-data #(u/create nil nil))
-          ex-data (-> throw :ex-data :errors)
+          ex-data (-> throw :data :errors)
           expected-errors ["Name should not be null"
                            "Origin should not be null"]]
       (is (= expected-errors ex-data))))
 
   (testing "given invalid origin when create then return errors"
     (let [throw (tw/throw-ex-data #(u/create "test" "test"))
-          ex-data (-> throw :ex-data :errors)
+          ex-data (-> throw :data :errors)
           expected-errors ["URL origin must start with http or https"]]
       (is (= expected-errors ex-data))))
 
@@ -47,7 +47,7 @@
                                            expected-active
                                            expected-created-at
                                            expected-updated-at))
-          ex-data (-> throw :ex-data :errors)
+          ex-data (-> throw :data :errors)
           expected-errors ["Active should not be null"
                            "Created at should not be null"
                            "Updated at should not be null"]]

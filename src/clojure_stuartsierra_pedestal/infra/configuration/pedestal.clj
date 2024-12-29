@@ -36,13 +36,21 @@
   (i/interceptor
     {:name  ::error-interceptor
      :error (fn [context exception]
-              (let [data (ex-data exception)]
-                (if (= (:type data) :domain)
-                  (assoc context :response {:status  400
-                                            :headers {"Content-Type" "application/json"}
-                                            :body    (json/write-str {:details (-> data :exception .getMessage)
-                                                                      :errors  (:errors data [])})})
-                  (throw exception))))}))
+              (let [response (get context :response)
+                    data (ex-data exception)
+                    message (-> data :exception .getMessage)
+                    type (:type data)
+                    errors (:errors data [])
+                    fn-response (fn [status]
+                                  (as-> response res
+                                        (assoc res :status status
+                                                   :headers {"Content-Type" "application/json"}
+                                                   :body {:message message :errors errors})
+                                        (assoc context :response res)))]
+                (case type
+                  :domain (fn-response 400)
+                  :not-found (fn-response 404)
+                  :else (throw exception))))}))
 
 (defn ^:private request-database-interceptor [service-map database]
   (let [interceptor (i/interceptor

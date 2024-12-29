@@ -6,4 +6,5 @@
     (fn)
     (catch ExceptionInfo e
       {:ex      e
-       :ex-data (ex-data e)})))
+       :message (.getMessage e)
+       :data (ex-data e)})))

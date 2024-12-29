@@ -1,7 +1,6 @@
 (ns unit.domain.pagination.pagination-test
   (:require [clojure-stuartsierra-pedestal.domain.pagination.pagination :as p]
-            [clojure.test :refer :all]
-            ))
+            [clojure.test :refer :all]))
 
 (deftest pagination-test
   (testing "given valid params when calls with pagination then instance pagination"
