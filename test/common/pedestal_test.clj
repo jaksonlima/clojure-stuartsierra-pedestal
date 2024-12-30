@@ -4,4 +4,4 @@
 
 (deftest pedestal-get-server-fn-test
   (testing "given valid params when calls service-fn then return it valid"
-    (is :io.pedestal.http/service-fn (p/service-fn {:pedestal {:service :io.pedestal.http/service-fn}}))))
+    (is (= :mock-fn (p/service-fn {:pedestal {:service {:io.pedestal.http/service-fn :mock-fn}}})))))

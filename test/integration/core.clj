@@ -1,19 +1,21 @@
 (ns integration.core
-  (:require [clojure.test :refer :all]
-            [common.pedestal :as cp]
+  (:require [clojure-stuartsierra-pedestal.domain.url :as u]
+            [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
+            [clojure-stuartsierra-pedestal.infra.gateways.postgres-url-gateway :as pug]
+            [clojure.test :refer :all]
             [common.server :refer [*system* with-system]]
+            [common.system :as system]
             [io.pedestal.test :refer [response-for]]))
 
-;(use-fixtures :once with-system)
+(use-fixtures :once with-system)
 
-;(deftest url-pagination-test
-;  (testing "Mock route responds correctly"
-;    (let [service (cp/pedestal-service-fn *system*)
-;          response (response-for service :get "/url-page?page=1&size=1")]
-;      (is (= 200 (:status response))))))
-;
-;(deftest url-by-id-test
-;  (testing "Mock route responds correctly"
-;    (let [service (cp/pedestal-service-fn *system*)
-;          response (response-for service :get "")]
-;      (is (= 200 (:status response))))))
+(deftest url-by-id-test
+  (testing "given valid when calls find-by-id then return it"
+    (let [pedestal (system/get-pedestal *system*)
+          datasource (system/get-datasource *system*)
+          gateway (pug/->PostgresUrlGateway datasource)
+          url-aggregate (u/create "google" "http://google.com")
+          url-id (-> url-aggregate :id :value str)
+          _ (ug/create! gateway url-aggregate)
+          response (response-for pedestal :get (format "/url/%s" url-id))]
+      (is (= 200 (:status response))))))
