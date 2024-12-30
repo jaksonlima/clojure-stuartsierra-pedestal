@@ -12,3 +12,9 @@
     (let [expected-ex-info {:type :domain :errors []}
           data (ex-data (de/domain-ex-info "test"))]
       (is (= expected-ex-info data)))))
+
+(deftest not-found-test
+  (testing "given valid params when calls ex-info then return it empty errors type not-found"
+    (let [expected-ex-info {:type :not-found :errors []}
+          data (ex-data (de/not-found "invalid id"))]
+      (is (= expected-ex-info data)))))

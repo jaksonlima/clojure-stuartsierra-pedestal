@@ -1,7 +1,7 @@
 (ns clojure-stuartsierra-pedestal.domain.url-id
-  (:require [clojure-stuartsierra-pedestal.domain.common.uuid :as uuid]
-            [clojure-stuartsierra-pedestal.domain.exceptions.domain :as de]
-            [schema.core :as s]))
+  (:require [clojure-stuartsierra-pedestal.domain.exceptions.domain :as de]
+            [schema.core :as s])
+  (:import (java.util UUID)))
 
 (s/defschema UrlId {:value s/Uuid})
 
@@ -11,11 +11,9 @@
     (throw (de/domain-ex-info "Validation aggregate UrlId" ["Id should not be null"]))))
 
 (s/defn create :- UrlId []
-  {:value (uuid/random)})
+  {:value (UUID/randomUUID)})
 
 (s/defn with :- UrlId
   [value :- s/Str]
   (validated-throw value)
-  {:value (uuid/from value)})
-
-
+  {:value (UUID/fromString value)})
