@@ -1,4 +1,4 @@
-(ns integration.core
+(ns integration.url-test
   (:require [clojure-stuartsierra-pedestal.domain.url :as u]
             [clojure-stuartsierra-pedestal.domain.url-gateway :as ug]
             [clojure-stuartsierra-pedestal.infra.gateways.postgres-url-gateway :as pug]
@@ -9,8 +9,8 @@
 
 (use-fixtures :once with-system)
 
-(deftest url-by-id-test
-  (testing "given valid when calls find-by-id then return it"
+(deftest find-by-id-url-test
+  (testing "given valid query when calls find by id then return it"
     (let [pedestal (system/get-pedestal *system*)
           datasource (system/get-datasource *system*)
           gateway (pug/->PostgresUrlGateway datasource)
