@@ -1,5 +1,6 @@
 (ns common.system
-  (:require [clojure.test :refer :all]))
+  (:require [clojure.data.json :as json]
+            [clojure.test :refer :all]))
 
 (defn get-pedestal
   [system]
@@ -8,3 +9,7 @@
 (defn get-datasource
   [system]
   (get-in system [:database :datasource]))
+
+(defn edn->json
+  [body]
+  (json/write-str body))

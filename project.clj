@@ -19,6 +19,7 @@
                  [seancorfield/next.jdbc "1.2.659"]
                  [org.postgresql/postgresql "42.2.6"]
                  [hikari-cp "2.13.0"]
+                 [com.h2database/h2 "2.2.224"]
 
                  [org.clojure/tools.logging "1.3.0"]
                  [org.slf4j/slf4j-simple "2.0.10"]

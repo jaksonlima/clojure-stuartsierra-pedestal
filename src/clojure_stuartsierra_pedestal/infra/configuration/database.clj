@@ -18,7 +18,10 @@
 (defn new-database []
   (map->Database {}))
 
-
+;{:jdbc-url "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
+; :username "sa"
+; :password ""
+; :maximum-pool-size 5}
 
 
 
