@@ -6,7 +6,8 @@
             [hikari-cp.core :as hikari]
             [next.jdbc :as jdbc]
             [next.jdbc.sql :as sql])
-  (:use [clojure.pprint]))
+  (:use [clojure.pprint])
+  (:import (java.util UUID)))
 
 (defrecord Database [config]
   component/Lifecycle
@@ -67,17 +68,18 @@
 
     (let [
           data (sql/insert! connection :url
-                       {:id         "24324"
+                       {:id        (.toString (UUID/randomUUID))
                         :name       "test"
                         :origin     "http://local.com"
                         :hash       "0a98em"})
           result (sql/query connection ["select * from url as url"])
 
-          ;parse (db->url result)
+          parse (db->url (first result))
           ]
 
       (pprint result)
       (pprint (first result))
+      (pprint parse)
       )
     )
   )
