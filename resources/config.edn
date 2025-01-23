@@ -1,7 +1,11 @@
 {:env      #or [#env ENV "dev"]
  :port     #or [#env PORT 8080]
- :database {:jdbc-url          #or [#env DB_URL "jdbc:postgresql://localhost:5432/clojure-postgres"]
-            :username          #or [#env DB_USERNAME "admin"]
-            :password          #or [#env DB_PASSWORD "12345"]
-            :maximum-pool-size 5
-            :pool-name         "clojure"}}
+ :database {:prod {:jdbc-url          #or [#env DB_URL "jdbc:postgresql://localhost:5432/clojure-postgres"]
+                   :username          #or [#env DB_USERNAME "admin"]
+                   :password          #or [#env DB_PASSWORD "12345"]
+                   :maximum-pool-size 5
+                   :pool-name         "clojure"}
+            :dev  {:adapter           "h2"
+                   :url               "jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_UPPER=FALSE;DB_CLOSE_DELAY=-1"
+                   :username          "sa"
+                   :maximum-pool-size 1}}}

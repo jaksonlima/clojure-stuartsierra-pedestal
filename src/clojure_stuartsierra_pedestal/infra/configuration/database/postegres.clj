@@ -1,4 +1,4 @@
-(ns clojure-stuartsierra-pedestal.infra.configuration.database
+(ns clojure-stuartsierra-pedestal.infra.configuration.database.postegres
   (:require [clojure-stuartsierra-pedestal.domain.url :as u]
             [clojure.java.io :as io]
             [clojure.tools.logging :as log]
@@ -13,7 +13,7 @@
   component/Lifecycle
   (start [this]
     (log/info "Start Database Server...")
-    (let [database-config (:database config)]
+    (let [database-config (-> config :database :prod)]
       (assoc this :datasource (hikari/make-datasource database-config))))
   (stop [this]
     (log/info "Stop Database Server...")

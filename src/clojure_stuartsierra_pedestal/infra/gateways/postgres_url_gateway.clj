@@ -19,14 +19,14 @@
 (s/defrecord PostgresUrlGateway [datasource]
   ug/UrlGateway
   (create! [_ url]
-    (let [result (sql/insert! datasource :url
-                              {:id         (-> url :id :value str)
-                               :name       (:name url)
-                               :origin     (:origin url)
-                               :hash       (-> url :hash :value)
-                               :created_at (Timestamp/from (:created-at url))
-                               :updated_at (Timestamp/from (:updated-at url))})]
-      (db->url result)))
+    (sql/insert! datasource :url
+                 {:id         (-> url :id :value str)
+                  :name       (:name url)
+                  :origin     (:origin url)
+                  :hash       (-> url :hash :value)
+                  :created_at (Timestamp/from (:created-at url))
+                  :updated_at (Timestamp/from (:updated-at url))})
+    url)
 
   (update! [_ url]
     (sql/update! datasource :url

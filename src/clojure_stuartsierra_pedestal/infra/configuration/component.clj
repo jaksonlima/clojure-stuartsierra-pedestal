@@ -1,22 +1,21 @@
 (ns clojure-stuartsierra-pedestal.infra.configuration.component
   (:require [clojure-stuartsierra-pedestal.infra.configuration.config :as config]
-            [clojure-stuartsierra-pedestal.infra.configuration.database :as database]
             [clojure-stuartsierra-pedestal.infra.configuration.pedestal :as pedestal]
+            [clojure-stuartsierra-pedestal.infra.configuration.database.postegres :as database.postegres]
+            [clojure-stuartsierra-pedestal.infra.configuration.database.in-memory :as database.in-memory]
             [clojure-stuartsierra-pedestal.infra.configuration.routes :as routes]
             [com.stuartsierra.component :as component])
   (:use [clojure.pprint]))
 
 (def system-component-prd (component/system-map :config (config/read-edn)
                                                 :routes routes/routes
-                                                :database (component/using (database/new-database) [:config])
+                                                :database (component/using (database.postegres/new-database) [:config])
                                                 :pedestal (component/using (pedestal/new-pedestal) [:config :database :routes])))
 
 
-(def h2 {:dbtype "h2" :dbname "mem:test;DB_CLOSE_DELAY=-1"})
-
 (def system-component-dev (component/system-map :config (config/read-edn)
                                                 :routes routes/routes
-                                                :database (component/using (database/new-database) [:config])
+                                                :database (component/using (database.in-memory/new-database) [:config])
                                                 :pedestal (component/using (pedestal/new-pedestal) [:config :database :routes])))
 
 (defn start
