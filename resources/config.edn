@@ -6,6 +6,6 @@
                    :maximum-pool-size 5
                    :pool-name         "clojure"}
             :dev  {:adapter           "h2"
-                   :url               "jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_UPPER=FALSE;DB_CLOSE_DELAY=-1"
+                   :url               "jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_UPPER=FALSE;DB_CLOSE_DELAY=-1;TRACE_LEVEL_FILE=4"
                    :username          "sa"
                    :maximum-pool-size 1}}}

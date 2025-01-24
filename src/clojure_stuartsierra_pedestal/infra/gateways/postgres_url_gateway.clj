@@ -59,4 +59,7 @@
           result-count (sql/query datasource [sql-count])
           count (:count (first result-count))
           result-map (map db->url results)]
-      (pg/with result-map page size count))))
+      (pg/with result-map page size count)))
+
+  (delete-all! [_]
+    (sql/query datasource ["DELETE FROM url"])))

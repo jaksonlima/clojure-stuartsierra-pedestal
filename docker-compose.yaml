@@ -8,3 +8,24 @@ services:
       POSTGRES_PASSWORD: 12345
       POSTGRES_USER: "admin"
       POSTGRES_DB: "clojure-postgres"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    command: /bin/bash -c "
+      apt-get update &&
+      apt-get install -y curl &&
+      curl -sSL https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz | tar -xzv -C /usr/local/bin &&
+      rm -rf /var/lib/apt/lists/* &&
+      dockerize -wait tcp://db:5432 -timeout 60s &&
+      java -jar shortcut-url.jar"
+    environment:
+      DB_URL: "jdbc:postgresql://db:5432/clojure-postgres"
+      DB_USERNAME: "admin"
+      DB_PASSWORD: "12345"
+      ENV: "prod"
+    ports:
+      - "8080:8080"

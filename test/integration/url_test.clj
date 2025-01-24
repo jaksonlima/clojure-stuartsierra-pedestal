@@ -7,7 +7,13 @@
             [common.system :as system]
             [io.pedestal.test :refer [response-for]]))
 
+(defn clean-up [_]
+  (let [datasource (system/get-datasource *system*)
+        gateway (pug/->PostgresUrlGateway datasource)]
+    (ug/delete-all! gateway)))
+
 (use-fixtures :once with-system)
+(use-fixtures :each clean-up)
 
 (deftest create-url-test
   (testing "given valid params when calls create url then return valid url"

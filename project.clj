@@ -29,5 +29,4 @@
   :main ^:skip-aot clojure-stuartsierra-pedestal.infra.core
   :target-path "target/%s"
   :uberjar-name "shortcut-url.jar"
-  :profiles {:uberjar {:aot :all}
-             :integration {:test-paths ["test/integration"]}})
+  :profiles {:uberjar {:aot :all}})
