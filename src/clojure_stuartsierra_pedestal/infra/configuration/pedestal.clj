@@ -77,6 +77,7 @@
     (log/info "Start Pedestal Server...")
     (let [started (-> {:env          (keyword (:env config))
                        ::http/port   (:port config)
+                       ::http/host   "0.0.0.0"
                        ::http/routes routes
                        ::http/type   :jetty
                        ::http/join?  false}
@@ -85,6 +86,7 @@
                       (request-database-interceptor database)
                       http/create-server
                       http/start)]
+      (log/info "Pedestal Server started port:" (:port config))
       (assoc this :service started)))
   (stop [this]
     (log/info "Stop Pedestal Server...")

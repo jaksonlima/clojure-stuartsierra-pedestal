@@ -14,7 +14,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "google-one",
+  "name": "google-two",
   "url": "https://www.google.com/"
 }
 
@@ -43,4 +43,4 @@ Accept: application/json
 
 GET {{baseUrl}}/url-redirect/tHxkD4
 
-###S
+###
