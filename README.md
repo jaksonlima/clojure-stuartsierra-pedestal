@@ -11,3 +11,8 @@ lein test
 ```shell
 lein uberjar
 ```
+
+- Build and Start
+```shell
+lein uberjar && docker compose up --build
+```
