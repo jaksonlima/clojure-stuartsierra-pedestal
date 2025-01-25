@@ -80,7 +80,9 @@
                        ::http/host   "0.0.0.0"
                        ::http/routes routes
                        ::http/type   :jetty
-                       ::http/join?  false}
+                       ::http/join?  false
+                       ::http/response-headers  {:strict-transport-security "max-age=31536000; includeSubDomains"
+                                                 :x-frame-options "DENY"}}
                       http/default-interceptors
                       add-interceptors
                       (request-database-interceptor database)

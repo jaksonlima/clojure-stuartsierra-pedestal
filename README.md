@@ -14,5 +14,5 @@ lein uberjar
 
 - Build and Start
 ```shell
-lein uberjar && docker compose up --build
+lein uberjar && docker compose up -d --build
 ```

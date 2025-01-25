@@ -14,13 +14,13 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "google-two",
+  "name": "google",
   "url": "https://www.google.com/"
 }
 
 ###
 
-GET {{baseUrl}}/url/22
+GET {{baseUrl}}/url/7d29384f-15c3-4867-a543-b269d70394d8
 Accept: application/json
 
 ###
@@ -41,6 +41,6 @@ Accept: application/json
 
 ###
 
-GET {{baseUrl}}/url-redirect/tHxkD4
+GET {{baseUrl}}/url-redirect/uFYabC
 
 ###

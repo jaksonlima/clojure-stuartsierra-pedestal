@@ -51,6 +51,7 @@
   [{{:keys [datasource]} :components
     {:keys [hash]}     :path-params}]
   (let [gateway (ug/->PostgresUrlGateway datasource)
-        output (uh/execute gateway hash)]
+        output (uh/execute gateway hash)
+        origin (:origin output)]
     {:status  301
-     :headers {"Location" output}}))
+     :headers {"Location" origin}}))
