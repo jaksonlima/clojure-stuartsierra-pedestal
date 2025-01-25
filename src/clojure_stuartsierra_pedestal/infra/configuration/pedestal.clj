@@ -19,16 +19,18 @@
     {:name ::coerce-response-body
      :leave
      (fn [context]
-       (let [accepted (get-in context [:request :accept :field] "text/plain")
+       (let [accepted (get-in context [:request :accept :field] "application/json")
              response (get context :response)
+             headers (get response :headers)
              body (get response :body)
              coerced-body (case accepted
                             "text/html" body
                             "text/plain" body
                             "application/edn" (pr-str body)
                             "application/json" (json/write-str body))
+             update-headers (assoc headers "Content-Type" accepted)
              updated-response (assoc response
-                                :headers {"Content-Type" accepted}
+                                :headers update-headers
                                 :body coerced-body)]
          (assoc context :response updated-response)))}))
 
